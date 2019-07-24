@@ -1,0 +1,16 @@
+{
+  "name": "nodeplay",
+  "version": "1.0.0",
+  "description": "server example",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mssql": "^5.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm start"
+  },
+  "author": "zikra",
+  "license": "ISC"
+}
