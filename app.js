@@ -1,6 +1,7 @@
 var express = require('express'); // Web Framework
 var app = express();
 var sql = require('mssql'); // MS Sql Server client
+const http = require('http');
 
 // Connection string parameters.
 var sqlConfig = {
@@ -21,10 +22,28 @@ var server = app.listen(8081, function () {
     console.log("app listening at http://%s:%s", host, port)
 });
 
-app.get('/getFriges', function (req, res) {
+app.get('/getFridges', function (req, res) {
 
-    let data = Json.stringify(req.body);
-    console.log(data)
+    // sql.connect(sqlConfig).then(pool => {
+    //     // Query
+        
+    //     return pool.request()
+    //         .query('select * from products')
+    // }).then(result => {
+    //     console.dir(result)
+    // }).catch(err => {
+    //   console.log(err)
+    // });
+
+    sql.connect(sqlConfig, function() {
+        var request = new sql.Request();
+        var price = req.params.price
+        request.query('select * from products', function(err, recordset) {
+            if(err) console.log(err);
+            res.end(JSON.stringify(recordset)); // Result in JSON format
+            // console.dir(recordset)
+        });
+    });
 
 })
 
