@@ -1,9 +1,14 @@
-var express = require('express'); // Web Framework
+const express = require('express')
+const http = require('http');
 var app = express();
 var sql = require('mssql'); // MS Sql Server client
-const http = require('http');
 
-// Connection string parameters.
+app.get('/', function (req, res) {
+  res.send('Hello my people!');
+});
+
+const port = process.env.PORT || 1337;
+
 var sqlConfig = {
     server: 'frizard-db.database.windows.net',
     user: 'frizard-admin',
@@ -14,8 +19,9 @@ var sqlConfig = {
     }
 }
 
-// Start server and listen on http://localhost:8081/
-var server = app.listen(8081, function () {
+
+
+var server = app.listen(port, function () {
     var host = server.address().address
     var port = server.address().port
 
@@ -24,16 +30,6 @@ var server = app.listen(8081, function () {
 
 app.get('/getFridges', function (req, res) {
 
-    // sql.connect(sqlConfig).then(pool => {
-    //     // Query
-        
-    //     return pool.request()
-    //         .query('select * from products')
-    // }).then(result => {
-    //     console.dir(result)
-    // }).catch(err => {
-    //   console.log(err)
-    // });
 
     sql.connect(sqlConfig, function() {
         var request = new sql.Request();
@@ -60,6 +56,8 @@ app.get('/getFridges/:price', function (req, res) {
         });
     });
 })
+
+
 
 app.get('/getFridges/:price/:colorfinish', function (req, res) {
 
